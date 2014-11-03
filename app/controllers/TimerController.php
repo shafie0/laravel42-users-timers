@@ -9,8 +9,7 @@ class TimerController extends AdminController {
 	 */
 	public function index()
 	{
-		$timers = Timer::orderBy('name', 'ASC')->paginate(10);
-		$timers = Timer::whereUserId(Auth::user()->id)->get();
+		$timers = Timer::whereUserId(Auth::user()->id)->paginate(10);
 		$total = DB::table('timers')
 					 ->select(DB::raw('SUM( TIME_TO_SEC( TIMEDIFF( enddate, startdate ) ) ) as total'))
                      ->where('user_id', '=', Auth::user()->id)
