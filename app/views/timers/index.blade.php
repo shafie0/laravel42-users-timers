@@ -71,6 +71,7 @@
 				</tr>
 			</thead>
 		</table>
+		{{$timers->links();}}
 	</div>
 	@else
 	<div class="alert alert-info col-md-4" style="margin-top: 15px">You currently have no timers</div>
