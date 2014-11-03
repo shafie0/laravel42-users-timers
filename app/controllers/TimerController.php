@@ -126,7 +126,8 @@ class TimerController extends AdminController {
 			$timer->save();
 		}
 
-        return Redirect::route('timers.index');
+	        //return to the previous page after executing the action
+        	return Redirect::back();
 	}
 
 	/**
@@ -145,7 +146,8 @@ class TimerController extends AdminController {
 			$timer->save();
 		}
 
-        return Redirect::route('timers.index');
+	        //return to the previous page after executing the action
+        	return Redirect::back();
 	}
 
 }
