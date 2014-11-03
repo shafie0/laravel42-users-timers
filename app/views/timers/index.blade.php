@@ -16,7 +16,7 @@
 					<th>Start</th>
 					<th>End</th>
 					<th>Diff</th>
-					<th>Preview</th>
+					<th>Start/Stop</th>
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
