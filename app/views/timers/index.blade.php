@@ -26,28 +26,28 @@
 				<tr>
 					<td>{{ $p->name }}</td>
 					<td>
-						@if ($p->startdate!='0000-00-00 00:00:00')
+						@if (!is_null($p->startdate))
 							<span class="label label-info">{{ $p->startdate}}</span>							
 						@endif
 					</td>
 					<td>
-						@if ($p->enddate!='0000-00-00 00:00:00')
+						@if (!is_null($p->enddate))
 							<span class="label label-info">{{ $p->enddate}}</span>							
 						@endif
 					</td>
 					<td>
-						@if ($p->enddate!='0000-00-00 00:00:00' and $p->startdate!='0000-00-00 00:00:00')
+						@if (!is_null($p->enddate) and !is_null($p->startdate))
 							<span class="label label-success">
-								{{secondsToTimeFormated(strtotime($p->enddate)-strtotime($p->startdate));}}
+								{{$seconds->getFormatedTime(strtotime($p->enddate)-strtotime($p->startdate));}}
 							</span>
 						@endif
 					<td>
-					@if ($p->startdate=='0000-00-00 00:00:00')						
+					@if (is_null($p->startdate))						
 						{{ Form::open(array('method'=>'post','action'=>'TimerController@start',"name"=>"form"))}}
 						{{ Form::hidden('timer_id', $p->id) }}
 						{{ Form::submit('Start', array('class' => 'btn btn-success')) }}
 						{{ Form::close() }}
-					@elseif ($p->enddate=='0000-00-00 00:00:00')
+					@elseif (is_null($p->enddate))
 						{{ Form::open(array('method'=>'post','action'=>'TimerController@stop',"name"=>"form"))}}
 						{{ Form::hidden('timer_id', $p->id) }}
 						{{ Form::submit('Stop', array('class' => 'btn btn-warning')) }}
