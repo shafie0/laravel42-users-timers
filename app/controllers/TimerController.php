@@ -16,12 +16,15 @@ class TimerController extends AdminController {
                      ->where('enddate', '<>','0000-00-00 00:00:00')
                      ->groupBy('user_id')
                      ->get();
+
 		if (empty($total)) {
 			$total = 0;
 		} else {
-        	$total = secondsToTimeFormated($total[0]->total);
+			$seconds= new FormatedTime;
+        	$total = $seconds->getFormatedTime($total[0]->total);
 		}
-        return View::make('timers.index', array('timers' => $timers, 'total' => $total));
+		
+        return View::make('timers.index', array('timers' => $timers,'total' => $total ,'seconds' => $seconds));
 	}
 
 	/**
@@ -45,7 +48,8 @@ class TimerController extends AdminController {
 
 		$v = Validator::make($input, Timer::$rules);
 
-		if ($v->passes()) {
+		if ($v->passes()) 
+		{
 			
 			$timer = new Timer;
 			$timer->name = Input::get('name');
@@ -110,24 +114,16 @@ class TimerController extends AdminController {
 		return Redirect::route('timers.index');
 	}
 
-	/**
+	/*
 	 * Start the timer.
 	 *
 	 * @return Response
 	 */
 	public function start()
 	{
-		$id=Input::get('timer_id');
-		
-		if(!is_null($id))
-		{
-			$timer=Timer::find($id);
-			$timer->startdate=date("Y-m-d H:i:s");
-			$timer->save();
-		}
-
-	        //return to the previous page after executing the action
-        	return Redirect::back();
+		Timer::start();
+        //return to the previous page after executing the action
+        return Redirect::back();
 	}
 
 	/**
@@ -137,17 +133,9 @@ class TimerController extends AdminController {
 	 */
 	public function stop()
 	{
-		$id=Input::get('timer_id');
-		
-		if(!is_null($id))
-		{
-			$timer=Timer::find($id);
-			$timer->enddate=date("Y-m-d H:i:s");
-			$timer->save();
-		}
-
-	        //return to the previous page after executing the action
-        	return Redirect::back();
+		Timer::stop();
+        //return to the previous page after executing the action
+        return Redirect::back();
 	}
 
 }
