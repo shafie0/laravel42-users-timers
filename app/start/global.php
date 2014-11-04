@@ -17,7 +17,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
 	app_path().'/models',
 	app_path().'/database/seeds',
-
+	app_path().'/classes', //we added this
 ));
 
 /*
@@ -88,4 +88,3 @@ require app_path().'/filters.php';
 | Next we will load the helpers file for the application.
 | it is the place where we will have our custom functions
 */
-require app_path().'/helpers.php';
